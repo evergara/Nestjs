@@ -1,7 +1,8 @@
 import { Body, Delete, Post, Put } from "@nestjs/common/decorators";
 import { ProductsService } from "./../../services/products.service";
-import { Controller, Get, Param, Query } from "@nestjs/common";
-import { CreatedProductDTO, UpdatedProductDTO } from "src/entities/product.dto";
+import { Controller, Get, Param, ParseUUIDPipe, Query } from "@nestjs/common";
+import { CreatedProductDTO, UpdatedProductDTO } from "src/dtos/product.dto";
+import { ParseIntPipe } from "src/common/pipes/parse-int.pipe";
 
 @Controller("products")
 export class ProductsController {
@@ -23,7 +24,7 @@ export class ProductsController {
 
   @Get(":productID")
   getOne(
-    @Param("productID") productID: string,
+    @Param("productID", ParseUUIDPipe) productID: string,
     @Query("limit") limit = 100,
     @Query("offset") offset = 50,
     @Query("brand") brand: string

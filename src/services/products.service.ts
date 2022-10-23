@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { CreatedProductDTO, UpdatedProductDTO } from "src/entities/product.dto";
+import { NotFoundException } from "@nestjs/common/exceptions";
+import { CreatedProductDTO, UpdatedProductDTO } from "src/dtos/product.dto";
 import { Product } from "src/entities/product.interface";
 import { v4 as uuidv4 } from "uuid";
 
@@ -27,7 +28,11 @@ export class ProductsService {
   }
 
   findOne(uuid: Product["id"]): Product {
-    return this.products.find((product) => product.id === uuid);
+    const product = this.products.find((product) => product.id === uuid);
+    if (!product) {
+      throw new NotFoundException(`Product #${uuid} not found`);
+    }
+    return product;
   }
 
   create(payload: CreatedProductDTO): Product {
@@ -45,6 +50,7 @@ export class ProductsService {
     if (product) {
       const index = this.products.findIndex((product) => product.id === uuid);
       this.products.splice(index, 1);
+      return true;
     }
   }
 
