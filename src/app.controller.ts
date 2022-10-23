@@ -1,6 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
-import { Param, Query } from '@nestjs/common/decorators';
-import { AppService } from './app.service';
+import { Controller, Get } from "@nestjs/common";
+import { Param, Query } from "@nestjs/common/decorators";
+import { AppService } from "./app.service";
 
 @Controller()
 export class AppController {
@@ -11,13 +11,13 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('new')
+  @Get("new")
   newEndPoint() {
-    return 'It is new';
+    return "It is new";
   }
 
-  @Get('/ruta/')
+  @Get("/ruta/")
   hello() {
-    return 'with /sas/';
+    return "with /sas/";
   }
 }
