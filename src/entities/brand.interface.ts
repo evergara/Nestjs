@@ -1,5 +1,6 @@
 import { BaseModel } from "./base.model";
 
-export interface Category extends BaseModel {
+export interface Brand extends BaseModel {
   name: string;
+  image: string;
 }
