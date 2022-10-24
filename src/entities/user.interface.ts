@@ -1,3 +1,7 @@
 import { BaseModel } from "./base.model";
 
-export type User = BaseModel;
+export interface User extends BaseModel {
+  email: string;
+  password: string;
+  role: string;
+}

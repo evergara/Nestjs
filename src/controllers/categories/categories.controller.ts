@@ -1,17 +1,43 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Put,
+} from "@nestjs/common";
+import { CategoriesService } from "src/services/categories.service";
+import { CreatedCategoryDTO } from "./../../dtos/category.dto";
+import { UpdateCategoryDTO } from "../../dtos/category.dto";
 
 @Controller("categories")
 export class CategoriesController {
-  @Get(":categoryID/products/:productID")
-  getCategoryParam(@Param() params: any) {
-    return `Categories ${params.categoryID} por product ${params.productID} params`;
+  constructor(private categoryServices: CategoriesService) {}
+
+  @Get()
+  getAll() {
+    return this.categoryServices.getAll();
   }
 
-  @Get(":categoryID/products/:productID")
-  getCategory(
-    @Param("categoryID") categoryID: string,
-    @Param("productID") productID: string
-  ) {
-    return `Category; ${categoryID} por product ${productID} Direct`;
+  @Get(":uuid")
+  findOne(@Param("uuid", ParseUUIDPipe) uuid: string) {
+    return this.categoryServices.findOne(uuid);
+  }
+
+  @Post()
+  create(@Body() payload: CreatedCategoryDTO) {
+    return this.categoryServices.create(payload);
+  }
+
+  @Put(":uuid")
+  updated(@Param("uuid") uuid: string, @Body() payload: UpdateCategoryDTO) {
+    return this.categoryServices.updated(uuid, payload);
+  }
+
+  @Delete(":uuid")
+  delete(@Param("uuid") uuid: string) {
+    return this.categoryServices.delete(uuid);
   }
 }
