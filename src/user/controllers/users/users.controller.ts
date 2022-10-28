@@ -30,6 +30,11 @@ export class UsersController {
     return this.userServices.findOne(uuid);
   }
 
+  @Get(":uuid/orders")
+  getOrder(@Param("uuid", ParseUUIDPipe) uuid: string) {
+    return this.userServices.getOrderByUser(uuid);
+  }
+
   @Post()
   create(@Body() payload: CreateUserDto) {
     return this.userServices.create(payload);

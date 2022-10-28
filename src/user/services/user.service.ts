@@ -3,12 +3,14 @@ import { CreateUserDto, UpdateUserDto } from "src/user/dtos/user.dto ";
 import { User } from "src/user/entities/user.interface";
 import { NotFoundException } from "@nestjs/common/exceptions";
 import { v4 as uuidv4 } from "uuid";
+import { Order } from "../entities/order.interface";
+import { ProductsService } from "src/product/services/products.service";
 
 @Injectable()
 export class UserService {
   private users: User[];
 
-  constructor() {
+  constructor(private productService: ProductsService) {
     this.users = [];
   }
 
@@ -58,5 +60,17 @@ export class UserService {
 
   private searchIndex(uuid: string): number {
     return this.users.findIndex((customer) => customer.id === uuid);
+  }
+
+  getOrderByUser(uuid: string): Order {
+    const user = this.findOne(uuid);
+
+    return {
+      id: uuidv4(),
+      createdAt: new Date(),
+      date: new Date(),
+      user,
+      products: this.productService.findAll(),
+    };
   }
 }

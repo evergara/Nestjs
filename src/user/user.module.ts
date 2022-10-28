@@ -5,9 +5,10 @@ import { OrdersService } from "./services/orders.service";
 import { OrdersController } from "./controllers/orders/orders.controller";
 import { UserService } from "./services/user.service";
 import { CustomsService } from "./services/customs.service";
+import { ProductModule } from "../product/product.module";
 
 @Module({
-  imports: [],
+  imports: [ProductModule],
   controllers: [OrdersController, CustomsController, UsersController],
   providers: [CustomsService, OrdersService, UserService],
 })
